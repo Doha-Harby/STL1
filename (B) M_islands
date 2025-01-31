@@ -1,0 +1,68 @@
+https://codeforces.com/group/zfHPZ8SWyK/contest/339715/problem/B 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+
+signed main() {
+    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+
+   vector<pair<int,int>>merged;
+
+   int m,n,q,u,v,l,r;
+
+   cin>>m>>n;
+   vector<pair<int,int>>pairs(m);
+   for(int i=0;i<m;i++)
+   {
+       cin>>pairs[i].first >> pairs[i].second;
+   }
+ sort(pairs.begin(), pairs.end());
+
+  pair<int, int> current = pairs[0];
+
+    for (int i = 1; i < pairs.size(); i++) {
+        if (pairs[i].first <= current.second) {
+
+            current.first = min(current.first, pairs[i].first);
+            current.second = max(current.second, pairs[i].second);
+        } else {
+
+            merged.push_back(current);
+            current = pairs[i];
+        }}
+        merged.push_back(current);
+
+        cin>>q; // bool t=false;
+        //vector<pair<int,int>>peo(q);
+        while(q--)
+         {
+           cin>>l >>r;
+           u=min(l,r);
+           v=max(l,r);
+
+           int left=0, right=merged.size()-1;
+            bool t=false;
+           while(left<=right)
+            {
+                int mid =(left+right) /2;
+              if(u >=merged[mid].first&&v <=merged[mid].second)
+              {
+                 //cout<<"YES\n";
+                 t=true;
+                 break;
+              }
+              if (v < merged[mid].first)
+                right = mid - 1;
+            else
+                left = mid + 1;
+
+            }
+            t==false ? cout<<"NO\n" :cout<<"YES\n";
+         }
+
+
+//cout<<merged[0].first<<merged[0].second<<merged[1].first<<merged[1].second<<merged[2].first<<merged[2].second;
+return 0;
+}
